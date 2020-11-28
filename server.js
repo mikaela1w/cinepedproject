@@ -2,9 +2,9 @@ var express = require("express");
 var bodyParser = require("body-parser");
 const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://cinepede_user:Cinepede2020@cluster0.gocey.mongodb.net/cinepede_db?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+const dbclient = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 var movieCollection= "movieinfo";
-
+var ObjectID = require('mongodb').ObjectID;
 
 var app = express();
 app.use(bodyParser.json());
@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 var db;
 
 // Connect to the database before starting the application server.
-client.connect(function (err, client) {
+dbclient.connect(function (err, client) {
   if (err) {
     console.log(err);
     process.exit(1);
@@ -44,7 +44,7 @@ function handleError(res, reason, message, code) {
    */
   
   app.get("/api/movies", function(req, res) {
-    db.collection(movieCollection).find({"year":"2019"}).toArray(function(err, docs) {
+    db.collection('movieinfo').find({year_ceremony:2019}).toArray(function(err, docs) {
         if (err) {
           handleError(res, err.message, "Failed to get movies.");
         } else {
@@ -62,6 +62,16 @@ function handleError(res, reason, message, code) {
    */
   
   app.get("/api/movies/:id", function(req, res) {
+    db.collection('movieinfo').findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
+        if (err) {
+          handleError(res, err.message, "Failed to get contact");
+        } else {
+          console.log("movie ID found: ");
+          console.log(req.params.id);
+          console.log(doc);
+          res.status(200).json(doc);
+        }
+      });
   });
   
   app.put("/api/movies/:id", function(req, res) {
