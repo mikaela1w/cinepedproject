@@ -48,6 +48,7 @@ function handleError(res, reason, message, code) {
         if (err) {
           handleError(res, err.message, "Failed to get movies.");
         } else {
+          console.log("movie collection found");
           res.status(200).json(docs);
         }
       });
