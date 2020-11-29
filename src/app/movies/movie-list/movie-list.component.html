@@ -1,0 +1,18 @@
+<div class="row">
+    <div class="col-md-5">
+      <h2>Movies</h2>
+      <ul class="list-group">
+        <li class="list-group-item"
+          *ngFor="let movie of movies"
+          (click)="selectMovie(movie)"
+          [class.active]="movie === selectedMovie">
+          {{movie.name}}
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-5 col-md-offset-2">
+      <movie-details
+        [movie]="selectedMovie">
+    </movie-details>
+    </div>
+  </div>
