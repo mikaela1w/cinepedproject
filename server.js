@@ -9,6 +9,10 @@ var ObjectID = require('mongodb').ObjectID;
 var app = express();
 app.use(bodyParser.json());
 
+// Create link to Angular build directory
+var distDir = __dirname + "/dist/";
+app.use(express.static(distDir));
+
 // Create a database variable outside of the database connection callback to reuse the connection pool in your app.
 var db;
 
@@ -38,9 +42,8 @@ function handleError(res, reason, message, code) {
     res.status(code || 500).json({"error": message});
   }
   
-  /*  "/api/contacts"
-   *    GET: finds all contacts
-   *    POST: creates a new contact
+  /*  "/api/movies"
+   *    GET: finds all movies(2019)
    */
   
   app.get("/api/movies", function(req, res) {
@@ -55,16 +58,14 @@ function handleError(res, reason, message, code) {
   });
   
   
-  /*  "/api/contacts/:id"
-   *    GET: find contact by id
-   *    PUT: update contact by id
-   *    DELETE: deletes contact by id
+  /*  "/api/movies/:id"
+   *    GET: find movie by id
    */
   
   app.get("/api/movies/:id", function(req, res) {
     db.collection('movieinfo').findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
         if (err) {
-          handleError(res, err.message, "Failed to get contact");
+          handleError(res, err.message, "Failed to get movie by ID");
         } else {
           console.log("movie ID found: ");
           console.log(req.params.id);
