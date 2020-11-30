@@ -8,7 +8,7 @@ export class MovieService {
 
     constructor (private http: HttpClient) {}
 
-    // get("/api/contacts")
+    // get("/api/movies")
     getMovies(): Promise<any | Movie[]> {
       return this.http.get(this.moviesUrl)
                  .toPromise()
@@ -16,7 +16,7 @@ export class MovieService {
                  .catch(this.handleError);
     }
 
-    // get("/api/contacts/:id") endpoint not used by Angular app
+    // get("/api/movies/:id") endpoint not used by Angular app
 
 
     private handleError (error: any) {
