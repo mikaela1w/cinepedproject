@@ -5,9 +5,11 @@
 </div>
 <div *ngIf="movie" class="row">
     <ul class="list-group">
-        {{movie.category}}
-        {{movie.film}}
-        {{movie.year_ceremony}}
-        {{movie.winner}}
+        <li class="list-group-item">
+            "category: " {{movie.category}}
+            "film: "{{movie.film}}
+            "ceremony year: "{{movie.year_ceremony}}
+            "winner: "{{movie.winner}}
+      </li>
     </ul>
 </div>
