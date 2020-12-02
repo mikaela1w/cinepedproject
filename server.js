@@ -8,7 +8,7 @@ var ObjectID = require('mongodb').ObjectID;
 
 var app = express();
 app.use(bodyParser.json());
-
+app.set('json spaces', 2);
 // Create link to Angular build directory
 var distDir = __dirname + "/dist/";
 app.use(express.static(distDir));
@@ -43,21 +43,39 @@ function handleError(res, reason, message, code) {
   }
   
   /*  "/api/movies"
-   *    GET: finds all movies(2019)
+   *    GET: finds all movies 
    */
   
   app.get("/api/movies", function(req, res) {
-    db.collection('movieinfo').find({year_ceremony:2019}).toArray(function(err, docs) {
-        if (err) {
-          handleError(res, err.message, "Failed to get movies.");
-        } else {
-          console.log("movie collection found");
-          res.status(200).json(docs);
-        }
-      });
+    var yr = req.query.year_ceremony;
+    var yr_num= parseInt(yr);
+    if(typeof yr != 'undefined'){
+        console.log("showing movies for the year:" + yr);
+        db.collection('movieinfo').find({year_ceremony: yr_num}).toArray(function(err, docs) {
+            if (err) {
+              handleError(res, err.message, "Failed to get filtered movies.");
+            } else {
+              console.log("movie collection found");
+              res.status(200).json(docs);
+            }
+          });
+      }
+    else{
+        console.log("showing all movies");
+        db.collection('movieinfo').find().toArray(function(err, docs) {
+            if (err) {
+              handleError(res, err.message, "Failed to get all movies.");
+            } else {
+              console.log("movie collection found");
+              res.status(200).json(docs);
+            }
+          });
+    }
+    
   });
   
-  
+
+
   /*  "/api/movies/:id"
    *    GET: find movie by id
    */
@@ -65,9 +83,9 @@ function handleError(res, reason, message, code) {
   app.get("/api/movies/:id", function(req, res) {
     db.collection('movieinfo').findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
         if (err) {
-          handleError(res, err.message, "Failed to get movie by ID");
+          handleError(res, err.message, "Failed to get nominee by ID");
         } else {
-          console.log("movie ID found: ");
+          console.log("nominee ID found: ");
           console.log(req.params.id);
           console.log(doc);
           res.status(200).json(doc);
