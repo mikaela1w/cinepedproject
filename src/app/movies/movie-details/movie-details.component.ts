@@ -13,8 +13,4 @@ export class MovieDetailsComponent {
   movie: Movie;
   constructor (private movieService: MovieService) {}
 
-  grabMovie = (movie: Movie) => {
-    return movie;
-  }
-
 }
