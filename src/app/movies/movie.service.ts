@@ -16,8 +16,14 @@ export class MovieService {
                  .catch(this.handleError);
     }
 
-    // get("/api/movies/:id") endpoint not used by Angular app
-
+    // get("/api/movies/:id")
+    grabMovie(getMovie: Movie): Promise<any | Movie> {
+      var getUrl= this.moviesUrl + '/' + getMovie._id;
+      return this.http.get(getUrl)
+                 .toPromise()
+                 .then(response=>response as Movie)
+                 .catch(this.handleError);
+    }
 
     private handleError (error: any) {
       let errMsg = (error.message) ? error.message :
