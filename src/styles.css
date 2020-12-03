@@ -6,10 +6,13 @@
 .toolbar {
     display: flex;
     align-items: center;
-    background-color: #26882b;
+    background-color: #7ac468;
     color: white;
     font-weight: 600;
 }
+.spacer {
+    flex: 1;
+    }
 footer {
     bottom: 0;
     left: 0;
@@ -17,7 +20,7 @@ footer {
     height: 60px;
     position: fixed;
     display: flex;
-    background-color: #26882b;
+    background-color: #7ac468;
     color: white;
     align-items: center;
     }
