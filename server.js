@@ -48,8 +48,9 @@ function handleError(res, reason, message, code) {
   
   app.get("/api/movies", function(req, res) {
     var yr = req.query.year_ceremony;
+    var cat= req.query.category;
     var yr_num= parseInt(yr);
-    if(typeof yr != 'undefined'){
+    if(typeof yr != 'undefined' && typeof cat == 'undefined'){
         console.log("showing movies for the year:" + yr);
         db.collection('movieinfo').find({year_ceremony: yr_num}).toArray(function(err, docs) {
             if (err) {
@@ -59,7 +60,29 @@ function handleError(res, reason, message, code) {
               res.status(200).json(docs);
             }
           });
-      }
+    }
+    else if(typeof yr == 'undefined' && typeof cat != 'undefined'){
+            console.log("showing movies for the category:" + cat);
+            db.collection('movieinfo').find({category: cat}).toArray(function(err, docs) {
+                if (err) {
+                  handleError(res, err.message, "Failed to get filtered movies.");
+                } else {
+                  console.log("movie collection found");
+                  res.status(200).json(docs);
+                }
+              });
+    }
+    else if(typeof yr != 'undefined' && typeof cat != 'undefined'){
+            console.log("showing movies for the year: " + yr_num + " and category: "+cat);
+            db.collection('movieinfo').find({$and:[{year_ceremony: yr_num}, {category: cat}]}).toArray(function(err, docs) {
+                if (err) {
+                  handleError(res, err.message, "Failed to get filtered movies.");
+                } else {
+                  console.log("movie collection found");
+                  res.status(200).json(docs);
+                }
+              });
+    }
     else{
         console.log("showing all movies");
         db.collection('movieinfo').find().toArray(function(err, docs) {

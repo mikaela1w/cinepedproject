@@ -18,7 +18,7 @@ export class MovieListComponent implements OnInit {
 
   ngOnInit() {
      this.movieService
-      .getMovies()
+      .getMovies("2019")
       .then((movies: Movie[]) => {
         this.movies = movies.map((movie) => {
           return movie;

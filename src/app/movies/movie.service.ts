@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Movie } from './movie';
 import { HttpClient} from '@angular/common/http';
+import {HttpParams} from "@angular/common/http";
 
 @Injectable()
 export class MovieService {
@@ -9,8 +10,12 @@ export class MovieService {
     constructor (private http: HttpClient) {}
 
     // get("/api/movies")
-    getMovies(): Promise<any | Movie[]> {
-      return this.http.get(this.moviesUrl)
+    getMovies(term: string): Promise<any | Movie[]> {
+      term = term.trim();
+
+      const options = term ?
+      { params: new HttpParams().set('year_ceremony', term) } : {};
+      return this.http.get(this.moviesUrl,options)
                  .toPromise()
                  .then(response=>response as Movie[])
                  .catch(this.handleError);
