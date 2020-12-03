@@ -1,8 +1,19 @@
 <div class="row">
     <div class="col-md-5">
-      <h2>Oscar Nominees</h2><br>
-      <p>Year:</p>
-      <p>Category:</p><br>
+      <h2>Oscar Nominees</h2>
+      <label for ="year">Year:</label>
+      <select name="year" id="year">
+        <option value="2019">2019</option>
+        <option value="2018">2018</option>
+        <option value="2017">2017</option>
+        <option value="2016">2016</option>
+      </select>
+      <p>Category:</p>
+      <form class="Search">
+        <input class="SearchBar" type="text" placeholder="Search" aria-Label="SearchBar">
+        <button mdbBtn size="sm" class="Searchbutton" mdbWavesEffect type="submit">Gooooo!</button>
+      </form>
+    
       <div class="scrollable">
       <ul class="list-group">
         <li class="list-group-item"
