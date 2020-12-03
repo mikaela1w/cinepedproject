@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 .scrollable {
-    height: 400px; 
+    height: 550px; 
     overflow-y: auto;
     }
 .toolbar {
@@ -10,3 +10,14 @@
     color: white;
     font-weight: 600;
 }
+footer {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    position: fixed;
+    display: flex;
+    background-color: #26882b;
+    color: white;
+    align-items: center;
+    }
