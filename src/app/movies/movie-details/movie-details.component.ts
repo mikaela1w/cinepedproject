@@ -5,7 +5,8 @@ import {MovieService } from '../movie.service';
 @Component({
   selector: 'movie-details',
   templateUrl: './movie-details.component.html',
-  styleUrls: ['./movie-details.component.css']
+  styleUrls: ['./movie-details.component.css'],
+  providers: [MovieService]
 })
 
 export class MovieDetailsComponent {

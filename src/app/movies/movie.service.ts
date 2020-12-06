@@ -10,11 +10,10 @@ export class MovieService {
     constructor (private http: HttpClient) {}
 
     // get("/api/movies")
-    getMovies(term: string): Promise<any | Movie[]> {
-      term = term.trim();
+    getMovies(yr: Number): Promise<any | Movie[]> {
 
-      const options = term ?
-      { params: new HttpParams().set('year_ceremony', term) } : {};
+      const options = yr ?
+      { params: new HttpParams().set('year_ceremony', yr.toString()) } : {};
       return this.http.get(this.moviesUrl,options)
                  .toPromise()
                  .then(response=>response as Movie[])
@@ -29,10 +28,13 @@ export class MovieService {
                  .then(response=>response as Movie)
                  .catch(this.handleError);
     }
-
+    //get(OMDB)
+    getOMDBDetails(title:String,year:Number) {​​​​​
+      return this.http.get(`https://www.omdbapi.com/?apikey=3771a118&t=`+title+"&y="+ year.toString() +"&Plot=full");
+      }​​​​​
     private handleError (error: any) {
       let errMsg = (error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-      console.error(errMsg); // log to console instead
+      console.error(errMsg); 
     }
 }

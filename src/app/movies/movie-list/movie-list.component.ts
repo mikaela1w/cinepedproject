@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Movie } from '../movie';
 import { MovieService } from '../movie.service';
 import { MovieDetailsComponent } from '../movie-details/movie-details.component';
+import { parseConfigFileTextToJson } from 'typescript';
 
 @Component({
   selector: 'movie-list',
@@ -18,7 +19,7 @@ export class MovieListComponent implements OnInit {
 
   ngOnInit() {
      this.movieService
-      .getMovies("2019")
+      .getMovies(2019)
       .then((movies: Movie[]) => {
         this.movies = movies.map((movie) => {
           return movie;
@@ -33,7 +34,11 @@ export class MovieListComponent implements OnInit {
   }
 
   selectMovie(movie: Movie) {
-    this.selectedMovie = movie
+    this.selectedMovie = movie;
+    this.movieService.getOMDBDetails(movie.film,movie.year_film).subscribe((datas:any)=>{
+      this.selectedMovie
+
+    })
   }
 
 }
